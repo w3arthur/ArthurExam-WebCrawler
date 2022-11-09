@@ -12,5 +12,10 @@ namespace ArthurExam
         public string? sourceUrl { get; set; }
         public int depth { get; set; }
 
+        public override string ToString()
+        {
+            return "imageUrl: " + imageUrl + " sourceUrl: " + sourceUrl + " depth: " + depth + "\n";
+        }
+
     }
 }
