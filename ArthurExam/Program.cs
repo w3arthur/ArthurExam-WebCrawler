@@ -17,6 +17,7 @@ namespace ArthurExam
 {
     class Program
     {
+        static public bool isCliProduction = false;     //false for debug mode, true for exe and arguments
         static public int timeout = 5*60;   //sec
         static string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."); //@""
         static string fileName = @"results.json";
@@ -27,7 +28,7 @@ namespace ArthurExam
         static async Task Main(string[] args)
         {
 //variables
-            string url;
+            string url = @"";
             int depth = 0;
 
             //arguments
@@ -45,17 +46,15 @@ namespace ArthurExam
             catch
             {
                 Console.WriteLine("wrong arguments entered");
- //awailable               return;
+                if(isCliProduction) return;
             }
 
-            //example
-             url = @"https://validator.w3.org/"; 
+            if (!isCliProduction)  url = @"https://validator.w3.org/";  //example
 
 
             results = new List<Result>(); ;
-            visitedUrl = new List<string>() { "./" };
+            visitedUrl = new List<string>() { "./", url }; // add url
 
-            visitedUrl.Add(url);
 
             var @element = await UrlToJSON(url);
 
