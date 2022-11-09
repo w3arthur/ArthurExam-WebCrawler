@@ -105,20 +105,17 @@ namespace ArthurExam
                 Console.WriteLine("wrong arguments entered");
                 return; 
             }
-
+                //arguments
             string url = args[0]; //@"https://validator.w3.org/";
-            int depth = int.Parse(args[1]);
-
+            int depth = 0; 
+            int.TryParse(args[1], out depth);
+            if (depth < 0) depth = 0;
 
             string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @""); //@"..\..\.."
             string fileName = @"results.json";
 
-
             results = new List<Result>(); ;
             visitedUrl = new List<string>() { "./" };
-
-
-
 
 
             visitedUrl.Add(url);
