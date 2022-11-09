@@ -1,12 +1,22 @@
 # ArthurExam-WebCrowler
 
 running note:
-inside folder: executable
+
+
+inside the folder: 
+* executable
+
 run (for example): 
-crawler.exe https://arthurcam.com 0
+
+* crawler.exe https://arthurcam.com 0
+
+<br>
+<br>
+
 
 runnig arguments:
-crawler.exe <url> <depth>
+* crawler.exe url depth
 
+<br>
 
 Thanks Arthur 😊
