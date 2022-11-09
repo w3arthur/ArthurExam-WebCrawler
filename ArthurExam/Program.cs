@@ -14,10 +14,6 @@ namespace ArthurExam
 {
     class Program
     {
-        static string filePath = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, @"..\..\..");
-        static string fileName = @"results.json";
-        static string url = @"https://validator.w3.org/";
-        //List<string> programmerLinks = new List<string>();
         static public List<Result> results;
         static public List<string> visitedUrl;
 
@@ -104,15 +100,32 @@ namespace ArthurExam
 
         static async Task Main(string[] args)
         {
+            if (args.Length != 2)
+            { 
+                Console.WriteLine("wrong arguments entered");
+                return; 
+            }
+
+            string url = args[0]; //@"https://validator.w3.org/";
+            int depth = int.Parse(args[1]);
+
+
+            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @""); //@"..\..\.."
+            string fileName = @"results.json";
+
+
             results = new List<Result>(); ;
             visitedUrl = new List<string>() { "./" };
+
+
+
 
 
             visitedUrl.Add(url);
 
             var @element = await AddressToJSON(url);
 
-            await Finder(@element, url, 1, 0);
+            await Finder(@element, url, depth, 0);
 
             
             string jsonToFile = JsonConvert.SerializeObject(results.ToArray());
@@ -136,4 +149,5 @@ namespace ArthurExam
 //istall jsonize
 //https://github.com/JackWFinlay/jsonize
 //json pretier
+//https://jsonformatter.org/json-pretty-print
 //https://jsonformatter.curiousconcept.com/#

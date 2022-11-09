@@ -1,0 +1,4 @@
+running note:
+inside folder: executable
+run: 
+crawler.exe https://arthurcam.com 0
