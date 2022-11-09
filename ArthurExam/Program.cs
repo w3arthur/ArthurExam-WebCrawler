@@ -22,8 +22,8 @@ namespace ArthurExam
         static string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."); //@""
         static string fileName = @"results.json";
 
-        static public List<Result> results;
-        static public List<string> visitedUrl;
+        static public List<Result>? results;
+        static public List<string>? visitedUrl;
         
         static async Task Main(string[] args)
         {
@@ -93,7 +93,7 @@ namespace ArthurExam
                 if (depth != 0 && @element.tag == "a")
                 {
                     string new_address = @element.attr.href;
-                    if (!visitedUrl.Contains(new_address))  //!
+                    if (!visitedUrl!.Contains(new_address))  //!
                     {
                         try
                         {
