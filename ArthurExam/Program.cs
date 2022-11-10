@@ -29,7 +29,7 @@ namespace ArthurExam
         {
 //variables
             string url = @"";
-            int depth = 0;
+            int depth = 1;
 
             //arguments
             try
@@ -133,14 +133,14 @@ namespace ArthurExam
                     for (int i = 0; i < count; i++) await Finder(@element.children[i], current_url, depth, current_depth);
                 }
             }
-            catch { };
+            catch { Console.WriteLine("~! issue found"); };
         }   // Finder End
 
 
         static async Task<dynamic> UrlToJSON(string url)
         {
-            HttpClient client = new HttpClient();
-            var response = await client.GetAsync(url);
+            using HttpClient client = new HttpClient();
+            using var response = await client.GetAsync(url);
             string html = await response.Content.ReadAsStringAsync();
             JsonizeParser parser = new JsonizeParser();
             JsonizeSerializer serializer = new JsonizeSerializer();
