@@ -20,7 +20,7 @@ namespace ArthurExam
 
         public async Task WriteToFile(string filePath, string fileName)
         {
-            string jsonToFile = JsonConvert.SerializeObject(Results!.ToArray());
+            string jsonToFile = await Task.Run(() => JsonConvert.SerializeObject(Results));
             string jsonToFile_results = "{" + "\"results\":" + jsonToFile + "}";
             await System.IO.File.WriteAllTextAsync(System.IO.Path.Combine(filePath, fileName), jsonToFile_results);
 

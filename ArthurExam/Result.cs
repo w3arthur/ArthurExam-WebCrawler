@@ -8,9 +8,9 @@ namespace ArthurExam
 {
     public class Result
     {
-        public string? imageUrl { private get; set; }
-        public string? sourceUrl { private get; set; }
-        public int depth { private get; set; }
+        public string? imageUrl { get; set; }   //neef punlic get for NewtonSoft for Json
+        public string? sourceUrl { get; set; }
+        public int depth { get; set; }
 
         public override string ToString()
         {
