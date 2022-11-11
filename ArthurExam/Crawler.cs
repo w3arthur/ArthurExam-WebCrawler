@@ -56,7 +56,7 @@ namespace ArthurExam
         {
             try
             {
-                if (depth != 0 && @element.tag == "a") // <a>...</a>
+                if (depth != 0 && @element.tag == "a") // <a href="...">...</a>
                 {
                     string new_address = @element.attr.href;
                     if (!VisitedUrl!.Contains(new_address))  //!
@@ -77,9 +77,9 @@ namespace ArthurExam
                         Console.WriteLine("anker link found");
                     }
                     else Console.WriteLine("site viewed");
-                    //do not return, img may include inside as children
+                    //do not return, img may included inside <a>...</a> as children
                 }
-                else if (@element.tag == "img") // <img />
+                else if (@element.tag == "img") // <img src="..." />
                 {
                     Results!.Add(new Result()
                     {
