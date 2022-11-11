@@ -36,7 +36,7 @@ namespace ArthurExam
         }
 
 
-        public async Task Run(string url, int depth) 
+        public async Task<Crawler> Run(string url, int depth) 
         {
             var @element = await UrlToJSON(url);
             VisitedUrl!.Add(url);
@@ -52,12 +52,13 @@ namespace ArthurExam
             {
                 Console.WriteLine("task is completed");
                 Console.WriteLine();
-                return;
+                return this;
             }
 
             Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!!");
             Console.WriteLine("time limmit set to (sec): " + Timeout);
             Console.WriteLine();
+            return this;
         }
 
         public async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
@@ -124,6 +125,21 @@ namespace ArthurExam
             dynamic @json = JsonConvert.DeserializeObject(htmlJsonize);
             return @json;
         }   // UrlToJSON End
+
+
+        public static void ArgumentsSet(string[] args, ref string url, ref int depth)
+        {
+            if (args.Length > 2 || args.Length == 0) throw new Exception();
+            if (args.Length == 2)
+            {
+                int.TryParse(args[1], out depth);
+                if (depth < 0) depth = 0;
+            }
+            url = args[0];
+            if (String.IsNullOrEmpty(url)) throw new Exception();
+        }   // ArgumentsSet End
+
+
 
     }
 }

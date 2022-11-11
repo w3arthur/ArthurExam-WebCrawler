@@ -1,4 +1,5 @@
 ﻿
+using AngleSharp.Dom;
 using Jsonize;
 using Jsonize.Parser;
 using Jsonize.Serializer;
@@ -15,12 +16,14 @@ using static System.Net.WebRequestMethods;
 
 namespace ArthurExam
 {
+
     class Program
     {
         static public bool isCliProduction = false;     //false for debug mode, true for exe and arguments
         static public int timeout = 5 * 60;   //sec
         static string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."); //@""
         static string fileName = @"results.json";
+
 
         static async Task Main(string[] args)
         {
@@ -31,30 +34,22 @@ namespace ArthurExam
 
             //arguments
             if (isCliProduction)
-            { 
+            {
                 try
                 {
-                    if (args.Length > 2 || args.Length == 0) throw new Exception();
-                    if (args.Length == 2)
-                    {
-                        int.TryParse(args[1], out depth);
-                        if (depth < 0) depth = 0;
-                    }
-                    url = args[0];
-                    if (String.IsNullOrEmpty(url)) throw new Exception();
+                    Crawler.ArgumentsSet(args, ref url, ref depth);
                 }
                 catch
                 {
                     Console.WriteLine("wrong arguments entered");
-                     return;
+                    return;
                 }
             }
             else url = @"https://validator.w3.org/";  //example
 
-            Crawler models = new Crawler() { Timeout = timeout };
+            Crawler crawler = await new Crawler() { Timeout = timeout }.Run(url, depth) ;
 
-            await models.Run(url, depth);
-            await models.WriteToFile(filePath, fileName);
+            await crawler.WriteToFile(filePath, fileName);
 
         }    // Main End
 
