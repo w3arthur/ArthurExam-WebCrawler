@@ -24,7 +24,7 @@ namespace ArthurExam
             string jsonToFile_results = "{" + "\"results\":" + jsonToFile + "}";
             await System.IO.File.WriteAllTextAsync(System.IO.Path.Combine(filePath, fileName), jsonToFile_results);
 
-            Console.WriteLine(String.Join(',', Results));
+            Console.WriteLine(String.Join(',', Results!));  
         }
 
 
@@ -112,7 +112,8 @@ namespace ArthurExam
             Jsonizer jsonizer = new Jsonizer(parser, serializer);
             var htmlJsonize = await jsonizer.ParseToStringAsync(html);
             // JObject json = JObject.Parse(htmlJsonize);
-            dynamic @json = JsonConvert.DeserializeObject(htmlJsonize);
+            dynamic? @json = JsonConvert.DeserializeObject(htmlJsonize);
+            if (@json is null) throw new Exception();
             return @json;
         }   // UrlToJSON End
 
