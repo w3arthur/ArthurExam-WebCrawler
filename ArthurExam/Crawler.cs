@@ -32,24 +32,23 @@ namespace ArthurExam
         {
             var @element = await UrlToJSON(url);
             VisitedUrl!.Add(url);
-
             var task = Task.Run(async () =>
-            {
+            { 
                 await Finder(@element, url, depth, 0);
             });
 
             bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(Timeout));
-
             if (isCompletedSuccessfully)
             {
                 Console.WriteLine("task is completed");
                 Console.WriteLine();
-                return this;
             }
-
-            Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!!");
-            Console.WriteLine("time limmit set to (sec): " + Timeout);
-            Console.WriteLine();
+            else 
+            {
+                Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!!");
+                Console.WriteLine("time limmit set to (sec): " + Timeout);
+                Console.WriteLine();
+            }
             return this;
         }
 
@@ -80,7 +79,6 @@ namespace ArthurExam
                     else Console.WriteLine("site viewed");
                     //do not return, img may include inside as children
                 }
-
                 else if (@element.tag == "img") // <img />
                 {
                     Results!.Add(new Result()
@@ -130,7 +128,6 @@ namespace ArthurExam
             url = args[0];
             if (String.IsNullOrEmpty(url)) throw new Exception();
         }   // ArgumentsSet End
-
 
 
     }
