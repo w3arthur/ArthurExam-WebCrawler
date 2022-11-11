@@ -1,19 +1,4 @@
 ﻿
-using AngleSharp.Dom;
-using Jsonize;
-using Jsonize.Parser;
-using Jsonize.Serializer;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Net.WebRequestMethods;
-//sing System.Xml;
-
-
 namespace ArthurExam
 {
 
