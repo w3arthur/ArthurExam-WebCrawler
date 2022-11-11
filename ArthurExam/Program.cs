@@ -9,31 +9,23 @@ namespace ArthurExam
         static string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @""); //@""
         static string filePath_Debugger = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."); //@""
         static string fileName = @"results.json";
-
+        //variables
+        static string url = @"";
+        static int depth = 0;
 
         static async Task Main(string[] args)
         {
-            //variables
-            string url = @"";
-            int depth = 1;
-
             //arguments
             if (args.Length > 0 || isCliProduction)    //isCliProduction
             {
-                try
-                {
-                    Crawler.ArgumentsSet(args, ref url, ref depth);
-                }
-                catch
-                {
-                    Console.WriteLine("wrong arguments entered");
-                    return;
-                }
+                try { Crawler.ArgumentsSet(args, out url, out depth); }
+                catch { Console.WriteLine("wrong arguments entered"); return; }
             }
             else
             {
                 Console.WriteLine("Debug mode");
                 url = @"https://validator.w3.org/"; //example
+                //depth = depth; //example
                 filePath = filePath_Debugger;
             }
 

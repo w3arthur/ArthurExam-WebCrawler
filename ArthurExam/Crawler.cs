@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 namespace ArthurExam
 {
 
-    public class Crawler
+    public class Crawler : Result
     {
         public List<Result>? Results { get; private set; }
         private List<string>? VisitedUrl { get; set; }
-        public int Timeout { private get; set; } = 5*60; // sec
+        public int Timeout { private get; set; } = 5*60; // sec     // = default settings
 
         public Crawler() 
         { 
@@ -52,7 +52,7 @@ namespace ArthurExam
             return this;
         }
 
-        public async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
+        private async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
         {
             try
             {
@@ -117,8 +117,10 @@ namespace ArthurExam
         }   // UrlToJSON End
 
 
-        public static void ArgumentsSet(string[] args, ref string url, ref int depth)
+        public static void ArgumentsSet(string[] args, out string url, out int depth)
         {
+            depth = 0;
+            url = @"";
             if (args.Length > 2 || args.Length == 0) throw new Exception();
             if (args.Length == 2)
             {
