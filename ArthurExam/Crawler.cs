@@ -37,7 +37,7 @@ namespace ArthurExam
                 await Finder(@element, url, depth, 0);
             });
 
-            bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(Timeout));
+            bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(value: Timeout));
             if (isCompletedSuccessfully)
             {
                 Console.WriteLine("task is completed");
@@ -71,7 +71,7 @@ namespace ArthurExam
                         {   //if cant read relevent path of address
                             new_address = current_url + new_address;
                             VisitedUrl.Add(new_address);
-                            var @new_element = await UrlToJSON(new_address);
+                            var  @new_element = await UrlToJSON(new_address);
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
                         Console.WriteLine("anker link found");
