@@ -1,4 +1,8 @@
-﻿
+﻿using WebCrawler.Classes;
+using WebCrawler.Models;
+
+
+
 namespace WebCrawler
 {
 
@@ -13,12 +17,19 @@ namespace WebCrawler
         static string url = @"";
         static int depth = 0;
 
+
+
+
         static async Task Main(string[] args)
         {
+
+
+
+            Console.WriteLine("Mainת Thread " + Thread.CurrentThread.ManagedThreadId);
             //arguments
             if (args.Length > 0 || isCliProduction)    //isCliProduction
             {
-                try { Crawler.ArgumentsSet(args, out url, out depth); }
+                try { Arguments.Set(args, out url, out depth); }
                 catch { Console.WriteLine("wrong arguments entered"); return; }
             }
             else
@@ -31,9 +42,9 @@ namespace WebCrawler
 
             Console.WriteLine("Crawler running, please wait...");
 
-            Crawler crawler = await new Crawler() { Timeout = timeout }.Run(url, depth) ;
+            List<Result> crawlerResults = await new Crawler() { Timeout = timeout }.Run(url, depth) ;
 
-            await crawler.WriteToFile(filePath, fileName);
+            await WriteToFile.Run(crawlerResults, filePath, fileName);
 
         }    // Main End
 

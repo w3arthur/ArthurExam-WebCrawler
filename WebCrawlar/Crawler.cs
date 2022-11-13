@@ -3,34 +3,25 @@ using Jsonize.Serializer;
 using Jsonize;
 using Newtonsoft.Json;
 using System.Linq;
+using WebCrawler.Classes;
+using WebCrawler.Models;
+
 
 namespace WebCrawler
 {
 
     public class Crawler : Result
     {
-        public List<Result>? Results { get; private set; }
-        private List<string>? VisitedUrl { get; set; }
+        public List<Result>? Results { get; private set; } = new List<Result>();
+        private List<string>? VisitedUrl { get; set; } = new List<string>() { "./" };
         public int Timeout { private get; set; } = 5*60; // sec     // = default settings
 
-        public Crawler() 
-        { 
-            Results = new List<Result>();
-            VisitedUrl = new List<string>() { "./" };
-        }
+        //public Crawler() { }
 
-        public async Task WriteToFile(string filePath, string fileName)
+        public async Task<List<Result>> Run(string url, int depth) 
         {
-            string jsonToFile = await Task.Run(() => JsonConvert.SerializeObject(Results));
-            string jsonToFile_results = "{" + "\"results\":" + jsonToFile + "}";
-            await System.IO.File.WriteAllTextAsync(System.IO.Path.Combine(filePath, fileName), jsonToFile_results);
-
-            Console.WriteLine(String.Join(',', Results!));
-        }   // WriteToFile End
-
-        public async Task<Crawler> Run(string url, int depth) 
-        {
-            var @element = await UrlToJSON(url);
+            Console.WriteLine("Async Run Thread " + Thread.CurrentThread.ManagedThreadId);
+            var @element = await UrlToJson.Run(url);
             VisitedUrl!.Add(url);
             var task = Task.Run(async () =>
             { 
@@ -49,13 +40,14 @@ namespace WebCrawler
                 Console.WriteLine("time limmit set to (sec): " + Timeout);
                 Console.WriteLine();
             }
-            return this;
+            return Results;
         }   // Run End
 
         private async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
         {
             try
             {
+                Console.WriteLine("Async Finder Thread " + Thread.CurrentThread.ManagedThreadId);
                 if (depth != 0 && @element.tag == "a") // <a href="...">...</a>
                 {
                     string new_address = @element.attr.href;
@@ -64,14 +56,14 @@ namespace WebCrawler
                         try
                         {
                             VisitedUrl.Add(new_address);
-                            var @new_element = await UrlToJSON(new_address);    //!
+                            var @new_element = await UrlToJson.Run(new_address);    //!
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
                         catch
                         {   //if cant read relevent path of address
                             new_address = current_url + new_address;
                             VisitedUrl.Add(new_address);
-                            var  @new_element = await UrlToJSON(new_address);
+                            var  @new_element = await UrlToJson.Run(new_address);
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
                         Console.WriteLine("anker link found");
@@ -82,7 +74,7 @@ namespace WebCrawler
                 else if (@element.tag == "img") // <img src="..." />
                 {
                     string imageUrl = @element.attr.src;
-                    if (! Results!.Any( x => x.imageUrl == imageUrl) )
+                    if (! Results!.Any( result => result.imageUrl == imageUrl) )
                     {
                         Results!.Add(new Result()
                         {
@@ -106,39 +98,10 @@ namespace WebCrawler
         }   // Finder End
 
 
-       public static async Task<dynamic> UrlToJSON(string url)
-        {
-            using HttpClient client = new HttpClient();
-            using var response = await client.GetAsync(url);
-            string html = await response.Content.ReadAsStringAsync();
-            JsonizeParser parser = new JsonizeParser();
-            JsonizeSerializer serializer = new JsonizeSerializer();
-            Jsonizer jsonizer = new Jsonizer(parser, serializer);
-            var htmlJsonize = await jsonizer.ParseToStringAsync(html);
-            // JObject json = JObject.Parse(htmlJsonize);
-            dynamic? @json = JsonConvert.DeserializeObject(htmlJsonize);
-            if (@json is null) throw new Exception();
-            return @json;
-        }   // UrlToJSON End
-
-        public static void ArgumentsSet(string[] args, out string url, out int depth)
-        {
-            depth = 0;
-            url = @"";
-            if (args.Length > 2 || args.Length == 0) throw new Exception();
-            if (args.Length == 2)
-            {
-                int.TryParse(args[1], out depth);
-                if (depth < 0) depth = 0;
-            }
-            url = args[0];
-            if (String.IsNullOrEmpty(url)) throw new Exception();
-        }   // ArgumentsSet End
 
 
     }
 }
-
 
 
 // make the functions shorter
