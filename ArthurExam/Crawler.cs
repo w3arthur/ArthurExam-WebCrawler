@@ -2,6 +2,7 @@
 using Jsonize.Serializer;
 using Jsonize;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace ArthurExam
 {
@@ -12,10 +13,13 @@ namespace ArthurExam
         private List<string>? VisitedUrl { get; set; }
         public int Timeout { private get; set; } = 5*60; // sec     // = default settings
 
+        private List<string> memo { get; set; }
+
         public Crawler() 
         { 
             Results = new List<Result>();
             VisitedUrl = new List<string>() { "./" };
+            memo = new();
         }
 
         public async Task WriteToFile(string filePath, string fileName)
@@ -26,7 +30,6 @@ namespace ArthurExam
 
             Console.WriteLine(String.Join(',', Results!));  
         }
-
 
         public async Task<Crawler> Run(string url, int depth) 
         {
@@ -81,13 +84,19 @@ namespace ArthurExam
                 }
                 else if (@element.tag == "img") // <img src="..." />
                 {
-                    Results!.Add(new Result()
+                    string imageUrl = @element.attr.src;
+                   // bool a = Results!.Find(x => x.imageUrl == imageUrl) is null;
+                    if (!memo.Contains(imageUrl) )
                     {
-                        imageUrl = @element.attr.src,
-                        sourceUrl = current_url,
-                        depth = current_depth
-                    });
-                    Console.WriteLine("image found");
+                        memo.Add(imageUrl);
+                        Results!.Add(new Result()
+                        {
+                            imageUrl = imageUrl,
+                            sourceUrl = current_url,
+                            depth = current_depth
+                        });
+                        Console.WriteLine("image found");
+                    }
                     return;
                 }
 
