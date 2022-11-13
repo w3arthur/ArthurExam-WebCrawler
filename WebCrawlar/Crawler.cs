@@ -93,7 +93,6 @@ namespace WebCrawler
 
 
 
-
     }
 }
 
@@ -102,3 +101,4 @@ namespace WebCrawler
 // fix another issues
 // learn about debugger
 // add error handler
+// use facade
