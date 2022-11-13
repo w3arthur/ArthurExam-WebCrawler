@@ -82,7 +82,6 @@ namespace ArthurExam
                 else if (@element.tag == "img") // <img src="..." />
                 {
                     string imageUrl = @element.attr.src;
-                   // bool a = Results!.Find(x => x.imageUrl == imageUrl) is null;
                     if (! Results!.Any( x => x.imageUrl == imageUrl) )
                     {
                         Results!.Add(new Result()
@@ -140,3 +139,8 @@ namespace ArthurExam
     }
 }
 
+
+
+// make the functions shorter
+// fix another issues
+// learn about debugger
