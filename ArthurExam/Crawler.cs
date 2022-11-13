@@ -13,7 +13,6 @@ namespace ArthurExam
         private List<string>? VisitedUrl { get; set; }
         public int Timeout { private get; set; } = 5*60; // sec     // = default settings
 
-
         public Crawler() 
         { 
             Results = new List<Result>();
@@ -122,7 +121,6 @@ namespace ArthurExam
             if (@json is null) throw new Exception();
             return @json;
         }   // UrlToJSON End
-
 
         public static void ArgumentsSet(string[] args, out string url, out int depth)
         {
