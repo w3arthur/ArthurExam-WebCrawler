@@ -14,7 +14,7 @@ namespace WebCrawler
 
     public class Crawler : Result
     {
-        public List<Result>? Results { get; private set; } = new List<Result>();
+        public List<Result>? Results { get; } = new List<Result>();
         private List<string>? VisitedUrl { get; set; } = new List<string>() { "./" };
         public int Timeout { private get; set; } = 5*60; // sec     // = default settings
 
