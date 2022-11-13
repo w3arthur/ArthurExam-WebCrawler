@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using System.Linq;
 using WebCrawler.Classes;
 using WebCrawler.Models;
+using AngleSharp.Dom;
+using System.Xml.Linq;
 
 
 namespace WebCrawler
@@ -43,6 +45,8 @@ namespace WebCrawler
             return Results;
         }   // Run End
 
+
+
         private async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
         {
             try
@@ -50,7 +54,8 @@ namespace WebCrawler
                 Console.WriteLine("Async Finder Thread " + Thread.CurrentThread.ManagedThreadId);
                 if (depth != 0 && @element.tag == "a") // <a href="...">...</a>
                 {
-                    string new_address = @element.attr.href;
+                    string tagUrl = @element.attr.href;
+                    string new_address = CombineUrl.Run(current_url, tagUrl);
                     if (!VisitedUrl!.Contains(new_address))  //!
                     {
                         try
@@ -59,13 +64,7 @@ namespace WebCrawler
                             var @new_element = await UrlToJson.Run(new_address);    //!
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
-                        catch
-                        {   //if cant read relevent path of address
-                            new_address = current_url + new_address;
-                            VisitedUrl.Add(new_address);
-                            var  @new_element = await UrlToJson.Run(new_address);
-                            await Finder(@new_element, new_address, depth - 1, current_depth + 1);
-                        }
+                        catch { }
                         Console.WriteLine("anker link found");
                     }
                     else Console.WriteLine("site viewed");
@@ -76,12 +75,7 @@ namespace WebCrawler
                     string imageUrl = @element.attr.src;
                     if (! Results!.Any( result => result.imageUrl == imageUrl) )
                     {
-                        Results!.Add(new Result()
-                        {
-                            imageUrl = imageUrl,
-                            sourceUrl = current_url,
-                            depth = current_depth
-                        });
+                        Results!.Add(new Result() { imageUrl = imageUrl, sourceUrl = current_url, depth = current_depth });
                         Console.WriteLine("image found");
                     }
                     return;
@@ -107,3 +101,4 @@ namespace WebCrawler
 // make the functions shorter
 // fix another issues
 // learn about debugger
+// add error handler
