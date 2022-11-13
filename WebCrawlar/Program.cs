@@ -1,5 +1,5 @@
 ﻿
-namespace ArthurExam
+namespace WebCrawler
 {
 
     class Program

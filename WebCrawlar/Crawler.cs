@@ -4,7 +4,7 @@ using Jsonize;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace ArthurExam
+namespace WebCrawler
 {
 
     public class Crawler : Result
@@ -25,8 +25,8 @@ namespace ArthurExam
             string jsonToFile_results = "{" + "\"results\":" + jsonToFile + "}";
             await System.IO.File.WriteAllTextAsync(System.IO.Path.Combine(filePath, fileName), jsonToFile_results);
 
-            Console.WriteLine(String.Join(',', Results!));  
-        }
+            Console.WriteLine(String.Join(',', Results!));
+        }   // WriteToFile End
 
         public async Task<Crawler> Run(string url, int depth) 
         {
@@ -50,7 +50,7 @@ namespace ArthurExam
                 Console.WriteLine();
             }
             return this;
-        }
+        }   // Run End
 
         private async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
         {

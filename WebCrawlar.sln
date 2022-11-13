@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArthurExam", "ArthurExam\ArthurExam.csproj", "{3915761F-5DDA-4BF3-8F2B-07BC508675FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler", "WebCrawlar\WebCrawler.csproj", "{94C9368F-0E6A-4F9E-9839-2A568607D688}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3915761F-5DDA-4BF3-8F2B-07BC508675FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3915761F-5DDA-4BF3-8F2B-07BC508675FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3915761F-5DDA-4BF3-8F2B-07BC508675FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3915761F-5DDA-4BF3-8F2B-07BC508675FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94C9368F-0E6A-4F9E-9839-2A568607D688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C9368F-0E6A-4F9E-9839-2A568607D688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C9368F-0E6A-4F9E-9839-2A568607D688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C9368F-0E6A-4F9E-9839-2A568607D688}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
