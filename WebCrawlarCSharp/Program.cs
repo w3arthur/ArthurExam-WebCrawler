@@ -61,3 +61,4 @@ namespace WebCrawler
 //https://jsonformatter.org/json-pretty-print
 //https://jsonformatter.curiousconcept.com/#
 //write testing https://stackoverflow.com/questions/372865/path-combine-for-urls
+//learn better about debbuger
