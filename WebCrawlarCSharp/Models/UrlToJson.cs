@@ -26,7 +26,7 @@ namespace WebCrawler.Models
             dynamic? @json = JsonConvert.DeserializeObject(htmlJsonize);
             if (@json is null) throw new Exception();
             return @json;
-        }   // UrlToJSON End
+        }
 
     }
 }

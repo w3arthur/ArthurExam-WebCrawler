@@ -17,13 +17,8 @@ namespace WebCrawler
         static string url = @"";
         static int depth = 0;
 
-
-
-
         static async Task Main(string[] args)
         {
-
-
 
             Console.WriteLine("Mainת Thread " + Thread.CurrentThread.ManagedThreadId);
             //arguments

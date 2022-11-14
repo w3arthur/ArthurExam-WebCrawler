@@ -25,26 +25,12 @@ namespace WebCrawler
             Console.WriteLine("Async Run Thread " + Thread.CurrentThread.ManagedThreadId);
             var @element = await UrlToJson.Run(url);
             VisitedUrl!.Add(url);
-            var task = Task.Run(async () =>
-            { 
-                await Finder(@element, url, depth, 0);
-            });
-
+            var task = Task.Run(async () => await Finder(@element, url, depth, 0) );
             bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(value: Timeout));
-            if (isCompletedSuccessfully)
-            {
-                Console.WriteLine("task is completed");
-                Console.WriteLine();
-            }
-            else 
-            {
-                Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!!");
-                Console.WriteLine("time limmit set to (sec): " + Timeout);
-                Console.WriteLine();
-            }
+            if (isCompletedSuccessfully) Console.WriteLine("task is completed \n");
+            else Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!! \ntime limmit set to (sec): " + Timeout + "\n");
             return Results;
-        }   // Run End
-
+        }
 
 
         private async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
@@ -64,7 +50,7 @@ namespace WebCrawler
                             var @new_element = await UrlToJson.Run(new_address);    //!
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
-                        catch { }
+                        catch (Exception e) { Console.WriteLine("~! <a>, depth redirect issue: " + e.Message); }
                         Console.WriteLine("anker link found");
                     }
                     else Console.WriteLine("site viewed");
@@ -88,10 +74,8 @@ namespace WebCrawler
                     for (int i = 0; i < count; i++) await Finder(@element.children[i], current_url, depth, current_depth);
                 }
             }
-            catch { Console.WriteLine("~! issue found"); };
-        }   // Finder End
-
-
+            catch (Exception e) { Console.WriteLine("~! issue found: " + e.Message); };
+        }
 
     }
 }

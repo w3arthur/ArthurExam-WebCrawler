@@ -20,6 +20,6 @@ namespace WebCrawler.Models
             }
             url = args[0];
             if (String.IsNullOrEmpty(url)) throw new Exception();
-        }   // ArgumentsSet End
+        }
     }
 }

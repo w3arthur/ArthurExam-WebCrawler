@@ -18,7 +18,7 @@ namespace WebCrawler.Models
             await System.IO.File.WriteAllTextAsync(System.IO.Path.Combine(filePath, fileName), jsonToFile_results);
 
             Console.WriteLine(String.Join(',', results));
-        }   // WriteToFile End
+        }
 
     }
 }
