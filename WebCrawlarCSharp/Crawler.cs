@@ -1,13 +1,5 @@
-﻿using Jsonize.Parser;
-using Jsonize.Serializer;
-using Jsonize;
-using Newtonsoft.Json;
-using System.Linq;
-using WebCrawler.Classes;
+﻿using WebCrawler.Classes;
 using WebCrawler.Models;
-using AngleSharp.Dom;
-using System.Xml.Linq;
-
 
 namespace WebCrawler
 {
@@ -29,7 +21,7 @@ namespace WebCrawler
             bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(value: Timeout));
             if (isCompletedSuccessfully) Console.WriteLine("task is completed \n");
             else Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!! \ntime limmit set to (sec): " + Timeout + "\n");
-            return Results;
+            return Results!;
         }
 
 
@@ -40,22 +32,21 @@ namespace WebCrawler
                 Console.WriteLine("Async Finder Thread " + Thread.CurrentThread.ManagedThreadId);
                 if (depth != 0 && @element.tag == "a") // <a href="...">...</a>
                 {
+                    Console.WriteLine("anker link found");
                     string tagUrl = @element.attr.href;
                     string new_address = CombineUrl.Run(current_url, tagUrl);
-                    if (!VisitedUrl!.Contains(new_address))  //!
+                    if (!VisitedUrl!.Contains(new_address))
                     {
                         try
                         {
                             VisitedUrl.Add(new_address);
-                            var @new_element = await UrlToJson.Run(new_address);    //!
+                            var @new_element = await UrlToJson.Run(new_address);
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
-                        catch (Exception e) { Console.WriteLine("~! <a>, depth redirect issue: " + e.Message); }
-                        Console.WriteLine("anker link found");
+                        catch (Exception e) { Console.WriteLine("~! <a>, depth redirect issue: " + e.Message); } 
                     }
                     else Console.WriteLine("site viewed");
-                    //do not return, img may included inside <a>...</a> as children
-                }
+                }//do not return, img may included inside <a>...</a> as children
                 else if (@element.tag == "img") // <img src="..." />
                 {
                     string imageUrl = @element.attr.src;
@@ -67,7 +58,7 @@ namespace WebCrawler
                     return;
                 }
 
-                if (@element.children.Count != 0)
+                if (@element.children.Count != 0)   //recursion, check all childrens
                 {
                     int count = element.children.Count;
                     Console.WriteLine("children check...");

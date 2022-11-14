@@ -1,8 +1,6 @@
 ﻿using WebCrawler.Classes;
 using WebCrawler.Models;
 
-
-
 namespace WebCrawler
 {
 
@@ -18,27 +16,20 @@ namespace WebCrawler
         static int depth = 0;
 
         static async Task Main(string[] args)
-        {
-
-            Console.WriteLine("Mainת Thread " + Thread.CurrentThread.ManagedThreadId);
+        { 
+            Console.WriteLine("Main start Thread " + Thread.CurrentThread.ManagedThreadId);
             //arguments
             if (args.Length > 0 || isCliProduction)    //isCliProduction
-            {
-                try { Arguments.Set(args, out url, out depth); }
-                catch { Console.WriteLine("wrong arguments entered"); return; }
-            }
+                try { Arguments.Set(args, out url, out depth); } catch { Console.WriteLine("wrong arguments entered"); return; }
             else
             {
                 Console.WriteLine("Debug mode");
                 url = @"https://flickr.com/photos/17682242@N06/5440808439/in/photolist-9hMyN4-kBT78S-rV85K9-kBRpS4-WmLNA9-cJDCpj-dSvags-bj6bg-9o1mXS-3ofsFe-dSvbhq-9TeAzw-cJDCyo-qzyEXB-nRZW1T-qihS4a-jzbxoo-bKnEHr-hQSh3P-FepYUZ-nxJtP6-pZSEPG-Fi4F9b-Swi5fn-txniu-2tjLVH-dV26un-dV7EPy-jGng3d-nxJzW6-xvmN3m-d9sv9d-bAg6A2-RFSz1b-oxLukt-N1KUU-YJfWvC-er5CuS-hvv58J-UoWEfA-dvc8TX-raZhk2-23WvnkC-TGJSLW-2dPKDJR-dQs2bU-6bSfhj-g7zra2-vMKuVY-23EkcWw"; //example
-                //depth = depth; //example
                 filePath = filePath_Debugger;
             }
 
             Console.WriteLine("Crawler running, please wait...");
-
             List<Result> crawlerResults = await new Crawler() { Timeout = timeout }.Run(url, depth) ;
-
             await WriteToFile.Run(crawlerResults, filePath, fileName);
 
         }    // Main End
