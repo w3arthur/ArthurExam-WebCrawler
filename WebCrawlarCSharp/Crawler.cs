@@ -10,8 +10,6 @@ namespace WebCrawler
         private List<string>? VisitedUrl { get; set; } = new List<string>() { "./" };
         public int Timeout { private get; set; } = 5*60; // sec     // = default settings
 
-        //public Crawler() { }
-
         public async Task<List<Result>> Run(string url, int depth) 
         {
             Console.WriteLine("Async Run Thread " + Thread.CurrentThread.ManagedThreadId);
@@ -23,7 +21,6 @@ namespace WebCrawler
             else Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!! \ntime limmit set to (sec): " + Timeout + "\n");
             return Results!;
         }
-
 
         private async Task Finder(dynamic @element, string current_url, int depth, int current_depth)
         {
