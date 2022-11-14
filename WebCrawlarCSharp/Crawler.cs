@@ -6,7 +6,7 @@ namespace WebCrawler
 
     public class Crawler : Result
     {
-        public static int ii = 0;
+        public int children = 0;
         public List<Result>? Results { get; } = new List<Result>();
         private List<string>? VisitedUrl { get; set; } = new List<string>() { "./" };
         public int Timeout { private get; set; } = 5*60; // sec     // = default settings
@@ -19,8 +19,6 @@ namespace WebCrawler
             bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(Timeout));
             if (isCompletedSuccessfully) Console.WriteLine("task is completed \n");
             else Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!! \ntime limmit set to (sec): " + Timeout + "\n");
-
-
             return Results!;
         }
 
@@ -59,7 +57,7 @@ namespace WebCrawler
                 if (@element.children.Count != 0)   //recursion, check all childrens
                 {
                     int count = element.children.Count;
-                    Console.WriteLine("children check..." + ++ii);
+                    Console.WriteLine("children check..." + ++children);
                     for (int i = 0; i < count; i++) await Finder(@element.children[i], current_url, depth, current_depth);
                 }
             }
