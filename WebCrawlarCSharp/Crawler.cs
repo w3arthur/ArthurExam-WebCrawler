@@ -28,7 +28,6 @@ namespace WebCrawler
         {
             try
             {
-                //Console.WriteLine("Async Finder Thread " + Thread.CurrentThread.ManagedThreadId);
                 if (depth != 0 && @element.tag == "a") // <a href="...">...</a>
                 {
                     Console.WriteLine("anker link found");

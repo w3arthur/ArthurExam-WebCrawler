@@ -17,7 +17,6 @@ namespace WebCrawler
 
         static async Task Main(string[] args)
         { 
-            Console.WriteLine("Main start Thread " + Thread.CurrentThread.ManagedThreadId);
             //arguments
             if (args.Length > 0 || isCliProduction)    //isCliProduction
                 try { Arguments.Set(args, out url, out depth); } catch { Console.WriteLine("wrong arguments entered"); return; }
@@ -32,7 +31,7 @@ namespace WebCrawler
             List<Result> crawlerResults = await new Crawler() { Timeout = timeout }.Run(url, depth) ;
             await WriteToFile.Run(crawlerResults, filePath, fileName);
 
-        }    // Main End
+        }
 
     }
 
