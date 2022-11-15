@@ -13,9 +13,9 @@ set(CMAKE_EXE_LINKER_FLAGS -static)
 
     #VCPKG
 #clion set for each compile option, Cmake options
-    #   -DCMAKE_TOOLCHAIN_FILE=C:/src/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake
-#set(VCPKG_INCLUDE_DIRS "C:/src/vcpkg/vcpkg/installed/x86-windows/include")
-#include_directories(${VCPKG_INCLUDE_DIRS})
+    #   -Wno-dev -DCMAKE_TOOLCHAIN_FILE=C:/src/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake
+        #set(VCPKG_INCLUDE_DIRS "C:/src/vcpkg/vcpkg/installed/x86-windows/include")
+        #include_directories(${VCPKG_INCLUDE_DIRS})
     # use the 64 bit version, (check why 86 not works)
 find_package(CURL CONFIG REQUIRED)
 target_link_libraries(${PROJECT_MAIN_NAME} PRIVATE CURL::libcurl)
