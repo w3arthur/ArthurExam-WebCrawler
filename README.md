@@ -1,5 +1,8 @@
 # WebCrawler (C++ Version and C#(.Net) Version)
 
+
+c++ version still on development
+
 running note:
 
 
