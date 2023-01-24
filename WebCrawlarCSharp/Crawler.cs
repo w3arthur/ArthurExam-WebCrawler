@@ -4,7 +4,7 @@ using WebCrawler.Models;
 namespace WebCrawler
 {
 
-    public class Crawler : Result
+    public class Crawler
     {
         public int children = 0;
         public List<Result>? Results { get; } = new List<Result>();
