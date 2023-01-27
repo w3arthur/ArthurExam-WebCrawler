@@ -6,6 +6,9 @@ namespace WebCrawler
 
     class Program
     {
+
+        //set this program to multithreading
+
         static public bool isCliProduction = false;     //false for debug mode, true for exe and arguments
         static public int timeout = 5 * 60;   //sec
         static string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @""); //@""
@@ -13,7 +16,7 @@ namespace WebCrawler
         static string fileName = @"results.json";
         //variables
         static string url = @"";
-        static int depth = 0;
+        static int depth = 2;
 
         static async Task Main(string[] args)
         { 
@@ -23,7 +26,7 @@ namespace WebCrawler
             else
             {
                 Console.WriteLine("Debug mode");
-                url = @"https://flickr.com/photos/17682242@N06/5440808439/in/photolist-9hMyN4-kBT78S-rV85K9-kBRpS4-WmLNA9-cJDCpj-dSvags-bj6bg-9o1mXS-3ofsFe-dSvbhq-9TeAzw-cJDCyo-qzyEXB-nRZW1T-qihS4a-jzbxoo-bKnEHr-hQSh3P-FepYUZ-nxJtP6-pZSEPG-Fi4F9b-Swi5fn-txniu-2tjLVH-dV26un-dV7EPy-jGng3d-nxJzW6-xvmN3m-d9sv9d-bAg6A2-RFSz1b-oxLukt-N1KUU-YJfWvC-er5CuS-hvv58J-UoWEfA-dvc8TX-raZhk2-23WvnkC-TGJSLW-2dPKDJR-dQs2bU-6bSfhj-g7zra2-vMKuVY-23EkcWw"; //example
+                url = @"http://arthurcam.com";//@"https://flickr.com/photos/17682242@N06/5440808439/in/photolist-9hMyN4-kBT78S-rV85K9-kBRpS4-WmLNA9-cJDCpj-dSvags-bj6bg-9o1mXS-3ofsFe-dSvbhq-9TeAzw-cJDCyo-qzyEXB-nRZW1T-qihS4a-jzbxoo-bKnEHr-hQSh3P-FepYUZ-nxJtP6-pZSEPG-Fi4F9b-Swi5fn-txniu-2tjLVH-dV26un-dV7EPy-jGng3d-nxJzW6-xvmN3m-d9sv9d-bAg6A2-RFSz1b-oxLukt-N1KUU-YJfWvC-er5CuS-hvv58J-UoWEfA-dvc8TX-raZhk2-23WvnkC-TGJSLW-2dPKDJR-dQs2bU-6bSfhj-g7zra2-vMKuVY-23EkcWw"; //example
                 filePath = filePath_Debugger;
             }
 

@@ -17,8 +17,8 @@ namespace WebCrawler
             VisitedUrl!.Add(url);
             var task = Task.Run(async () => { await Finder(@element, url, depth, 0); } );
             bool isCompletedSuccessfully = task.Wait(TimeSpan.FromSeconds(Timeout));
-            if (isCompletedSuccessfully) Console.WriteLine("task is completed \n");
-            else Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!! \ntime limmit set to (sec): " + Timeout + "\n");
+ //           if (isCompletedSuccessfully) Console.WriteLine("task is completed \n");
+ //           else Console.WriteLine("TASK GOT THE TIME LIMMIT AND STOPED!!! \ntime limmit set to (sec): " + Timeout + "\n");
             return Results!;
         }
 
@@ -28,7 +28,7 @@ namespace WebCrawler
             {
                 if (depth != 0 && @element.tag == "a") // <a href="...">...</a>
                 {
-                    Console.WriteLine("anker link found");
+//                    Console.WriteLine("anker link found");
                     string tagUrl = @element.attr.href;
                     string new_address = CombineUrl.Run(current_url, tagUrl);
                     if (!VisitedUrl!.Contains(new_address))
@@ -39,9 +39,9 @@ namespace WebCrawler
                             var @new_element = await UrlToJson.Run(new_address);
                             await Finder(@new_element, new_address, depth - 1, current_depth + 1);
                         }
-                        catch (Exception e) { Console.WriteLine("anker url issue " + "tagUrl (" + tagUrl + ") new_address (" + new_address + ") " + e); } 
+/**/                     catch (Exception e) {/* Console.WriteLine("anker url issue " + "tagUrl (" + tagUrl + ") new_address (" + new_address + ") " + e); */} 
                     }
-                    else Console.WriteLine("site viewed");
+                   // else Console.WriteLine("site viewed");
                 }//do not return, img may included inside <a>...</a> as children
                 else if (@element.tag == "img") // <img src="..." />
                 {
@@ -49,7 +49,7 @@ namespace WebCrawler
                     if (! Results!.Any( result => result.imageUrl == imageUrl) )
                     {
                         Results!.Add(new Result() { imageUrl = imageUrl, sourceUrl = current_url, depth = current_depth });
-                        Console.WriteLine("image found");
+ //                       Console.WriteLine("image found");
                     }
                     return;
                 }
@@ -57,11 +57,11 @@ namespace WebCrawler
                 if (@element.children.Count != 0)   //recursion, check all childrens
                 {
                     int count = element.children.Count;
-                    Console.WriteLine("children check..." + ++children);
+                    //Console.WriteLine("children check..." + ++children);
                     for (int i = 0; i < count; i++) await Finder(@element.children[i], current_url, depth, current_depth);
                 }
             }
-            catch (Exception e) { Console.WriteLine("~! issue found: " + e); };
+            catch (Exception e) {/* Console.WriteLine("~! issue found: " + e); */};
         }
 
     }
